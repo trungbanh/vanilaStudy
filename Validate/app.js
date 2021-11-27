@@ -26,13 +26,11 @@ var Validator = function (options) {
           errorMessage = _rule(
             formElement.querySelector(rule.selector + ':checked')
           )
-
           break;
         default:
           errorMessage = _rule(inputElement.value)
           break;
       }
-
       return errorMessage ? true : false;
     })
 
@@ -57,12 +55,10 @@ var Validator = function (options) {
       options.rules.forEach(function (rule) {
         var inputElement = formElement.querySelector(rule.selector);
         isValid = validate(inputElement, rule)
-
         if (!isValid) {
           isFormValid = false;
         }
       })
-
 
       if (isFormValid) {
         if (typeof options.onSubmit === 'function') {
@@ -70,10 +66,25 @@ var Validator = function (options) {
           var formValue = Array.from(formInput).reduce(function (values, input) {
             switch (input.type) {
               case 'radio':
-              case 'checkbox':
+                if (!input.matches(':checked')) {
+                  values[input.name] = '';
+                  return values;
+                }
                 values[input.name] = formElement.querySelector('input[name="' + input.name + '"]:checked').value
                 break;
-
+              case 'checkbox':
+                if (!input.matches(':checked')) {
+                  values[input.name] = [];
+                  return values;
+                }
+                if (!Array.isArray(values[input.name])) {
+                  values[input.name] = [];
+                }
+                values[input.name].push(input.value);
+                break;
+              case 'file':
+                values[input.name] = input.files;
+                break;
               default:
                 values[input.name] = input.value
             }

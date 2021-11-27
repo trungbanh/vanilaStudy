@@ -56,6 +56,38 @@
             <span class='text-danger message-error'></span>
           </div>
 
+          <div class="form-group ">
+            <label for="city"> City </label>
+            <select class="form-control" name="city" id="city">
+              <option value=""> ---- </option>
+              <option value="Cantho"> Cantho </option>
+              <option value="Mytho"> Mytho </option>
+              <option value="Tienggiang"> Tienggiang </option>
+            </select>
+            <span class='text-danger message-error'></span>
+          </div>
+
+          <div class="form-group">
+            <div>Hobbies</div>
+            <div class="d-flex justify-content-around">
+              <div>
+                <label for="book">Book</label>
+                <input type="checkbox" name="hobbies" id="book" value="book">
+              </div>
+              <div>
+                <label for="Planing">Planing</label>
+                <input type="checkbox" name="hobbies" id="Planing" value="Planing">
+              </div>
+            </div>
+            <span class='text-danger message-error'></span>
+          </div>
+
+          <div class="form-group">
+            <label for="avatar"><b>Avatar</b></label>
+            <input class="form-control" id="avatar" type="file" placeholder="Avatar" name="avatar">
+            <span class='text-danger message-error'></span>
+          </div>
+
           <div class="form-group d-grid mt-3">
             <button type="submit" class="btn btn-primary gap-12">Sign Up</button>
           </div>
@@ -78,6 +110,9 @@
       Validator.email('#email'),
       Validator.password('#password', 6),
       Validator.required('input[name="gender"]'),
+      Validator.required('input[name="hobbies"]'),
+      Validator.required('#avatar'),
+      Validator.required('#city'),
       Validator.required('#password-repeat'),
       Validator.confirm('#password-repeat', function () {
         return document.querySelector('#signin_form #password').value
